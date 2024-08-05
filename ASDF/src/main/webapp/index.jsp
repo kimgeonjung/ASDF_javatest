@@ -52,7 +52,7 @@
         <div class="inner">
             <h1>INNOVATION</h1>
             <p>혁신의 ASDF사 홈페이지에 방문해주셔서 감사합니다.<br>
-                Id praesentium molestias similique quaerat magni facere in a? Adipisci, possimus reprehenderit!</p>
+			<p/>
             <a href="#">view detail</a>
         </div>
     </figure>
@@ -103,7 +103,7 @@
     <footer>
         <div class="inner">
             <div class="upper">
-                <h1>DCODELAB</h1>
+                <h1>ASDF</h1>
                 <ul>
                     <li><a href="#">Policy</a></li>
                     <li><a href="#">Terms</a></li>
