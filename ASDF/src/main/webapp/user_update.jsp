@@ -10,6 +10,15 @@
 <title>정보 수정</title>
 </head>
 <body>
+<%
+if(session.getAttribute("userId")==null){
+%><script>
+	alert('로그인 먼저 하세요');
+	window.location.href='login.jsp';
+	</script>
+	<% 
+}
+%>
 <form action="user_update_process.jsp" method="post">
 	<table>
 		<tr>

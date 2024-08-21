@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UsersMapper">
+	<select id="loginUser" resultType="com.user.db.UsersDTO" parameterType="map">
+		select * from users where login_id = #{login_id} and pw = #{pw}
+	</select>
+
+    <select id="userCheck" resultType="String" parameterType="String">
+    	select login_id from users where login_id = #{login_id}
+    </select>
+
+    <insert id="registerUser" parameterType="com.user.db.UsersDTO">
+		insert into users values(users_seq.nextval, #{login_id}, #{pw}, #{name}, 
+		#{tel}, to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS'))
+    </insert>
+    
+    <update id="updateUser" parameterType="com.user.db.UsersDTO">
+		update users set pw = #{pw}, tel = #{tel}, 
+		regtime = to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS')
+    		where user_id = #{user_id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+		delete from users where user_id = #{user_id}
+    </delete>
+</mapper>
