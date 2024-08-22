@@ -1,16 +1,21 @@
 package com.board.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import com.board.db.*;
 import com.board.service.BoardService;
+import com.user.db.UsersDAO;
 import com.user.db.UsersDTO;
-import com.user.service.UsersService;
 
 @WebServlet("/")
 public class BoardController extends HttpServlet {
@@ -24,6 +29,7 @@ public class BoardController extends HttpServlet {
                          HttpServletResponse response)
                                  throws ServletException, IOException {
         String view = null;
+		HttpSession session = request.getSession();
 
         // URL에서 프로젝트 이름 뒷 부분의 문자열 얻어내기
         String uri = request.getRequestURI();
@@ -35,6 +41,7 @@ public class BoardController extends HttpServlet {
         	view = "index.jsp";
         }
         if (com.equals("/list")) {
+        	
             String tmp = request.getParameter("page");
             int pageNo = (tmp != null && tmp.length() > 0)
                     ? Integer.parseInt(tmp) : 1;
@@ -105,25 +112,41 @@ public class BoardController extends HttpServlet {
 
             new BoardService().deleteMsg(num);
             view = "redirect:list";
+            
+            // 로그인
         } else if(com.equals("/loginForm")) {
-        	view = "login.jsp";
+        	view = "/sign-in/loginForm.jsp";
+        	
         } else if(com.equals("/login")) {
+        	request.setCharacterEncoding("utf-8");
 	    	String login_id = request.getParameter("login_id");
 	    	String pw = request.getParameter("pw");
 	    	
-	    	UsersDTO dto = new UsersService().login(login_id, pw);
-	    	System.out.println(dto);
-	    	if (dto != null) {
-	    		System.out.println("들어옴");
-	    		//if(dto.getLogin_id().equals(login_id) && dto.getPw().equals(pw)){
-		    		request.setAttribute("user_id", dto.getUser_id());
-		    		request.setAttribute("user_pw", dto.getPw());
-		    		request.setAttribute("user_tel", dto.getTel());
-		    		view = "index.jsp";
-	    		//}
+	    	UsersDTO dto = new UsersDTO(0, login_id, pw, "", "", "");
+	    	UsersDAO dao = new UsersDAO();
+	    	
+	    	int login = dao.isUser(dto);
+	    	if (login == 1) {
+	    		dto = dao.findUser(dto);
+	    		session.setAttribute("userInfo", dto);
+	    		session.setAttribute("userLoggedIn", true);
+	    		view = "index.jsp";
 	    	} else {
-	    		System.out.println("XXX");
+	    		System.out.println("로그인 실패");
+				response.setCharacterEncoding("utf-8");
+				response.setContentType("text/html; charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script> alert('아이디 또는 비밀번호가 틀립니다.');");
+				out.println("history.go(-2); </script>"); 
+				out.close();
 	    	}
+	    	
+	    	// 로그아웃
+        } else if (com.equals("/logout")) {
+        	session.removeAttribute("userInfo");
+        	session.removeAttribute("userLoggedIn");
+        	
+        	view = "index.jsp";
         }
 
         // view에 담긴 문자열에 따라 포워딩 또는 리다이렉팅

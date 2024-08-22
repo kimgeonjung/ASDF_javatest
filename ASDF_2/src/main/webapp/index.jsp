@@ -25,45 +25,32 @@ a {
 </style>
 </head>
 
-<body>
+<body>    
 <header>
-	<nav class="navbar navbar-expand-md bg-body-tertiary">
-		<div class="container">
-		<h1><strong>
-			<a href="${pageContext.request.contextPath}" style="text-size: 50px;">ASDF</a></strong></h1>
-	
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<ul class="nav justify-content-end util">
-				<li class="nav-item">
-					<a class="nav-link" href="${pageContext.request.contextPath}/list" style="color: #999;">
-						게시판
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#" style="color: #999;">
-						회원관리
-					</a>
-				</li>
-				<c:choose>
-				<c:when test="${userId}">
-					<li class="nav-item" style="color: #999; font-size: 12px;">반갑습니다 ${userName}님
-					<li><a href="logout_process.jsp">로그아웃</a></li>
-            	</c:when>
-	            <c:otherwise>
-		            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/loginForm" style="color: #999;">로그인</a></li>
-		            <li class="nav-item"><a class="nav-link" href="register" style="color: #999;">회원가입</a></li>
-	            </c:otherwise>
-            </c:choose>
-			</ul>
-		</div>
-	</nav>
-</header>
+        <div class="inner">
+            <h1><a href="#">ASDF</a></h1>
 
+            <ul id="gnb">
+                <li><a href="#">DEPARTMENT</a></li>
+                <li><a href="#">GALLERY</a></li>
+                <li><a href="#">YOUTUBE</a></li>
+                <li><a href="${pageContext.request.contextPath}/list">BOARD</a></li>
+                <li><a href="#">LOCATION</a></li>
+            </ul>
+
+            <ul class="util">
+                <c:if test="${userLoggedIn}">
+                	<li><a href="#">${userInfo.name}님</a></li>
+                	<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+                </c:if>
+                <c:if test="${!userLoggedIn}">
+                	<li><a href="${pageContext.request.contextPath}/loginForm">Login</a></li>
+                </c:if>
+                
+                <li><a href="#">Sitemap</a></li>
+            </ul>
+        </div>
+    </header>
 
     <figure>
         <video src="img/visual.mp4" autoplay muted loop></video>
@@ -75,7 +62,7 @@ a {
         </div>
     </figure>
 
-    <section>
+    <section class="p-5">
         <div class="inner">
             <h1>RECENT NEWS</h1>
             <div class="wrap">
@@ -118,7 +105,7 @@ a {
         </div>
     </section>
 
-    <footer>
+    <footer class="pt-5">
         <div class="inner">
             <div class="upper">
                 <h1>ASDF</h1>

@@ -14,48 +14,42 @@ a {
 	color: inherit;
 	text-decoration: none;
 }
-
 </style>
+<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 </head>
 <body>
 	<header>
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-		<div class="container">
-		<h1><strong>
-			<a class="text-white" href="${pageContext.request.contextPath}" style="text-size: 50px;">ASDF</a></strong></h1>
-	
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<ul class="nav justify-content-end util">
-				<li class="nav-item">
-					<a class="nav-link" href="${pageContext.request.contextPath}/list" style="color: #999;">
-						게시판
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#" style="color: #999;">
-						회원관리
-					</a>
-				</li>
-				<c:choose>
-				<c:when test="${userId}">
-					<li class="nav-item" style="color: #999; font-size: 12px;">반갑습니다 ${userName}님
-					<li><a href="logout_process.jsp">로그아웃</a></li>
-            	</c:when>
-	            <c:otherwise>
-		            <li class="nav-item"><a class="nav-link" href="login" style="color: #999;">로그인</a></li>
-		            <li class="nav-item"><a class="nav-link" href="register" style="color: #999;">회원가입</a></li>
-	            </c:otherwise>
-            </c:choose>
-			</ul>
-		</div>
-	</nav>
-</header>
-	<div class="container pt-5">
+        <div class="inner">
+            <h1><a href="${pageContext.request.contextPath}">ASDF</a></h1>
+
+            <ul id="gnb">
+                <li><a href="#">DEPARTMENT</a></li>
+                <li><a href="#">GALLERY</a></li>
+                <li><a href="#">YOUTUBE</a></li>
+                <li><a href="${pageContext.request.contextPath}/list">BOARD</a></li>
+                <li><a href="#">LOCATION</a></li>
+            </ul>
+
+            <ul class="util">
+                <c:if test="${userLoggedIn}">
+                	<li><a href="#">${userInfo.name}님</a></li>
+                	<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
+                </c:if>
+                <c:if test="${!userLoggedIn}">
+                	<li><a href="${pageContext.request.contextPath}/loginForm">Login</a></li>
+                </c:if>
+                
+                <li><a href="#">Sitemap</a></li>
+            </ul>
+        </div>
+    </header>
+    <c:if test="${!userLoggedIn}">
+		<script>
+			alert('로그인 먼저 하세요');
+			history.go(-2);
+		</script>
+	</c:if>
+	<div class="container p-5">
 		<form method="post" action="${action}">
 			<div class="mb-3">
 				<label for="title" class="form-label">제목</label> 
@@ -63,7 +57,7 @@ a {
 			</div>
 			<div class="mb-3">
 				<label for="writer" class="form-label">작성자</label>
-				<input type="text" class="form-control" id="writer" name="writer" value="${msg.writer}">
+				<input type="text" class="form-control" id="writer" name="writer" value="${userInfo.name}" readonly>
 			</div>
 			<div class="mb-3">
 				<label for="content" class="form-label">내용</label>
@@ -75,6 +69,30 @@ a {
 			<input type="button" value="취소" onclick="history.back()" class="btn btn-outline-danger">
 		</form>
 	</div>
+	
+	    <footer class="pt-5">
+        <div class="inner">
+            <div class="upper">
+                <h1>ASDF</h1>
+                <ul>
+                    <li><a href="#">Policy</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Family Site</a></li>
+                    <li><a href="#">Sitemap</a></li>
+                </ul>
+            </div>
+
+            <div class="lower">
+                <address>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, facere.<br>
+                    TEL : 031-111-1234 C.P : 010-1234-5678
+                </address>
+                <p>
+                    2020 DOCDELAB &copy; copyright all right reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
 <!doctype html>
 <html lang="ko" data-bs-theme="auto">
 
 <head>
-  <script src="../assets/js/color-modes.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/js/color-modes.js"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
@@ -14,10 +14,10 @@
   <title>로그인</title>
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-  <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="css/sign-in.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/sign-in/sign-in.css" rel="stylesheet">
 </head>
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
@@ -42,19 +42,19 @@
   </svg>
 
   <main class="form-signin w-100 m-auto">
-    <form action="login" method="post">
-      <img class="mb-4" src="../assets/brand/door-open.svg" alt="" width="72" height="57">
+    <form action="${pageContext.request.contextPath}/login" method="post">
+      <img class="mb-4" src="${pageContext.request.contextPath}/assets/brand/door-open.svg" alt="" width="72" height="57">
       <h1 class="h3 mb-3 fw-normal">로그인</h1>
 
       <div class="form-floating">
-        <input type="text" class="form-control" name="login_id" id="login_id">
-        <label for="login_id">아이디 입력</label>
+        <input type="text" class="form-control" name="login_id" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">아이디 입력</label>
       </div>
       <div class="form-floating">
-        <input type="password" class="form-control" name="pw" id="pw">
-        <label for="pw">비밀번호 입력</label>
+        <input type="password" class="form-control" name="pw" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">비밀번호 입력</label>
       </div>
-
+      
       <div class="form-check text-start my-3">
         <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
         <label class="form-check-label" for="flexCheckDefault">
